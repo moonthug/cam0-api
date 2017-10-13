@@ -5,13 +5,12 @@
 //
 // DEPENDENCIES
 //
-import crypto from 'crypto';
+
 import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 
-import config from '../../config/config';
-
 import type { Schema } from 'mongoose';
+import type { Pattern } from 'cam0-typedefs';
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -19,36 +18,7 @@ import type { Schema } from 'mongoose';
 // SCHEMA
 //
 
-let UserSchema: Schema<*> = new mongoose.Schema({
-  //
-  // User Specific
-  firstName: {
-    type: String,
-    trim: true
-  },
-  lastName: {
-    type: String,
-    trim: true
-  },
-  emailAddress: {
-    type: String,
-    trim: true,
-    select: false
-  },
-
-  //
-  // Auth Specific
-  token: {
-    type: String,
-    select: false
-  },
-  tokenExpiry: {
-    type: Date,
-    default: Date.now
-  },
-
-  //
-  // Data Specific
+let PatternSchema: Schema<Pattern> = new mongoose.Schema({
   dateLastSignedIn: {
     type: Date,
     default: Date.now,
@@ -86,7 +56,7 @@ let UserSchema: Schema<*> = new mongoose.Schema({
  * @param {String} token
  * @param {Function} cb
  */
-UserSchema.methods.authenticate = function(token: string, cb): void {
+PatternSchema.methods.authenticate = function(token: string, cb: func): void {
   bcrypt.compare(token, this.token, cb);
 };
 
@@ -102,11 +72,11 @@ UserSchema.methods.authenticate = function(token: string, cb): void {
 
 /**
  *
- * @param {String} token
- * @param {Function} cb
+ * @param {string} token
+ * @param {func} cb
  */
 function hashToken(token: string, cb: func): void {
-  bcrypt.hash(token, 10, (err, hash): void => {
+  bcrypt.hash(token, 10, (err: ?Error, hash: string): void => {
     if (err) return cb(err);
 
     cb(null, hash);
@@ -118,4 +88,4 @@ function hashToken(token: string, cb: func): void {
 // Register
 //
 
-mongoose.model('user', UserSchema);
+mongoose.model('pattern', PatternSchema);
