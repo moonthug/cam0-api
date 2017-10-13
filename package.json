@@ -1,0 +1,73 @@
+{
+  "name": "cam0-api",
+  "version": "0.1.0",
+  "description": "cam0 API",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "precommit": "lint-staged",
+    "flow": "flow",
+    "start": "npm-run-all --parallel test:watch lint:watch start:server",
+    "start:server": "babel-node index.js",
+    "lint": "esw app --color",
+    "lint:watch": "npm run lint -- --watch",
+    "test": "jest -u",
+    "test:cover": "npm run test -- --coverage ",
+    "test:cover:CI":
+      "npm run test:CI -- --coverage && cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
+    "test:watch": "npm run test -- --watch",
+    "open:cover": "npm run test:cover && opn ./coverage/lcov-report/index.html",
+    "analyze-bundle": "babel-node ./tools/analyzeBundle.js",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "prettier": "prettier --write"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/moonthug/cam0-api"
+  },
+  "author": "alex <alex@polyglot.rodeo>",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/moonthug/f1sh_api#readme",
+  "dependencies": {
+    "bcrypt": "^1.0.2",
+    "boom": "^6.0.0",
+    "catbox-mongodb": "^3.0.1",
+    "catbox-redis": "^3.0.1",
+    "glue": "^4.1.0",
+    "good": "^7.2.0",
+    "good-console": "^6.4.0",
+    "good-file": "^6.0.1",
+    "good-squeeze": "^5.0.2",
+    "hapi": "^16.4.3",
+    "joi": "^11.1.1",
+    "mongoose": "^4.10.6"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.0.1",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-node6": "^11.0.0",
+    "cam0-typedefs": "git+https://github.com/moonthug/cam0-typedefs.git",
+    "enzyme": "3.1.0",
+    "eslint": "4.8.0",
+    "eslint-config-prettier": "^2.6.0",
+    "eslint-plugin-flowtype": "2.37.0",
+    "eslint-plugin-import": "2.7.0",
+    "eslint-plugin-prettier": "^2.3.1",
+    "eslint-watch": "3.1.2",
+    "flow-bin": "0.56.0",
+    "husky": "^0.14.3",
+    "jest": "21.2.1",
+    "jest-cli": "21.2.1",
+    "lint-staged": "^4.2.3",
+    "npm-run-all": "4.1.1",
+    "opn-cli": "3.1.0",
+    "prettier": "^1.7.2",
+    "swagger-editor": "^3.0.12"
+  }
+}
